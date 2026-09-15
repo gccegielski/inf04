@@ -1,0 +1,79 @@
+/* #3498db -> rgb(52, 152, 219) */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    margin: 0;
+}
+
+header {
+    justify-content: center;
+    color: #3498db;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+header img {
+    width: 80px;
+    height: 80px;
+}
+
+nav {
+    margin-left: auto;
+}
+
+nav a {
+    color: white;
+    margin: 10px;
+}
+
+nav a:hover {
+    color: yellow;
+}
+
+main {
+    width: 800px;
+    max-width: 90%;
+    margin: 30px auto;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    margin: 5px 0 10px;
+    padding: 8px;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: 0;
+}
+
+button:hover {
+    background: #217dbb;
+}
+
+p[id$="Error"] {
+    color: red;
+}
+
+#sukces {
+    color: green;
+}
+
+footer {
+    text-align: center;
+}
