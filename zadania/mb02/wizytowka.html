@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wizytówka</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Grzegorz Cegłowski 5p1T</h1>
+    <img src="https://images.unsplash.com/photo-1743094038737-ccebd0dc8799?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chinatown" width="100">
+</header>
+
+<main>
+    <section id="umiejetnosci">
+        <h2>Umiejętności</h2>
+        <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+        </ul>
+    </section>
+
+    <section id="kontakt">
+        <h2>Kontakt</h2>
+
+        <form id="form">
+            <label for="imie">Imię:</label>
+            <input type="text" id="imie">
+            <p id="imieError"></p>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email">
+            <p id="emailError"></p>
+
+            <label for="temat">Temat:</label>
+            <select id="temat">
+                <option value="">Wybierz</option>
+                <option value="praca">Praca</option>
+                <option value="projekt">Projekt</option>
+                <option value="inne">Inne</option>
+            </select>
+            <p id="tematError"></p>
+
+            <label for="wiadomosc">Wiadomość:</label>
+            <textarea id="wiadomosc"></textarea>
+            <p id="wiadomoscError"></p>
+
+            <button type="submit">Wyślij</button>
+        </form>
+
+        <p id="sukces"></p>
+    </section>
+</main>
+
+<footer>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
