@@ -1,8 +1,3 @@
-// Osobna modalka na każde zdjęcie — id budujemy z propsa `id`, więc każda
-// karta trafia w swoje własne okno (`#zdjecie1`, `#zdjecie2`, ...).
-// Jedna wspólna modalka ze zmiennym zdjęciem to temat MB6 — tam, gdy
-// poznamy useState, przechowamy "wybrane zdjęcie" w stanie zamiast
-// renderować osiem modalek naraz.
 function PhotoModal({ id, title, description, imageLarge, alt }) {
   const modalId = `zdjecie${id}`
   const labelId = `${modalId}Label`
