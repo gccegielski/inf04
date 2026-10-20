@@ -1,70 +1,99 @@
-import { useRef } from 'react'
-
-const kursy = [
-  'Programowanie w C#',
-  'Angular dla początkujących',
-  'Kurs Django',
-  'Wprowadzenie do SQL',
-]
+import { useState } from 'react'
+import Navbar from './components/Navbar.jsx'
+import CategoryBar from './components/CategoryBar.jsx'
+import Gallery from './components/Gallery.jsx'
+import AddPhotoModal from './components/AddPhotoModal.jsx'
+import FiltersOffcanvas from './components/FiltersOffcanvas.jsx'
+import Footer from './components/Footer.jsx'
+import photos from './data/photos.json'
+import './App.css'
 
 function App() {
-  const imieNazwiskoRef = useRef(null)
-  const numerKursuRef = useRef(null)
+  const [zdjecia, setZdjecia] = useState(photos)
+  const [aktywnaKategoria, setAktywnaKategoria] = useState('wszystkie')
 
-  function handleSubmit(event) {
-    event.preventDefault()
+  const widoczne =
+    aktywnaKategoria === 'wszystkie'
+      ? zdjecia
+      : zdjecia.filter(z => z.category === aktywnaKategoria)
 
-    const imienazwisko = imieNazwiskoRef.current.value
-    const numerkursu = Number(numerKursuRef.current.value)
-    const kurs = kursy[numerkursu - 1]
+  function usunZdjecie(id) {
+    setZdjecia(zdjecia.filter(z => z.id !== id))
+  }
 
-    console.log(imienazwisko)
+  function dodajZdjecie(nowe) {
+    const noweId = Math.max(...zdjecia.map(z => z.id)) + 1
+    setZdjecia([...zdjecia, { ...nowe, id: noweId, favorite: false }])
+  }
 
-    if (kurs !== undefined) {
-      console.log(kurs)
-    } else {
-      console.log('Nieprawidłowy numer kursu')
-    }
+  function przelaczUlubione(id) {
+    setZdjecia(
+      zdjecia.map(z => (z.id === id ? { ...z, favorite: !z.favorite } : z))
+    )
   }
 
   return (
-    <div className="container py-4" style={{ maxWidth: 600 }}>
-      <h1 className="h3 mb-4">Zapisy na kursy</h1>
+    <>
+      <Navbar />
 
-      <h2 className="h5">Liczba kursów: {kursy.length}</h2>
+      <header className="container py-4 py-lg-5">
+        <div className="row align-items-center g-3">
+          <div className="col-12 col-lg-8">
+            <h1 className="mb-2">Galeria zdjęć</h1>
+            <p className="lead text-body-secondary mb-0">
+              Zdjęcia z wypraw w góry, nad morze i po mieście. Wybierz kategorię,
+              żeby zawęzić widok — albo powiększ zdjęcie, które Ci się spodoba.
+            </p>
+          </div>
 
-      <ol>
-        {kursy.map((kurs, index) => (
-          <li key={index}>{kurs}</li>
-        ))}
-      </ol>
+          <div className="col-12 col-lg-4">
+            <div className="d-flex flex-wrap gap-2 justify-content-lg-end">
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#panelFiltrow"
+              >
+                Filtry
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#dodajZdjecie"
+              >
+                Dodaj zdjęcie
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="imienazwisko">Imię i nazwisko:</label>
-          <input
-            type="text"
-            id="imienazwisko"
-            className="form-control"
-            ref={imieNazwiskoRef}
-          />
-        </div>
-        <div className="form-group mt-2">
-          <label htmlFor="numerkursu">Numer kursu:</label>
-          <input
-            type="number"
-            id="numerkursu"
-            className="form-control"
-            ref={numerKursuRef}
-          />
-        </div>
-        <div className="form-group mt-3">
-          <button type="submit" className="btn btn-primary">
-            Zapisz do kursu
-          </button>
-        </div>
-      </form>
-    </div>
+      <main className="container">
+        <CategoryBar aktywna={aktywnaKategoria} onWybierz={setAktywnaKategoria} />
+
+        <p className="text-body-secondary">
+          Wyświetlono {widoczne.length} z {zdjecia.length} zdjęć
+        </p>
+
+        {widoczne.length === 0 && (
+          <div className="alert alert-warning">
+            Nie znaleziono zdjęć w tej kategorii.
+          </div>
+        )}
+
+        <Gallery
+          zdjecia={widoczne}
+          onUsun={usunZdjecie}
+          onPrzelacz={przelaczUlubione}
+        />
+      </main>
+
+      <Footer />
+
+      <AddPhotoModal onDodaj={dodajZdjecie} />
+      <FiltersOffcanvas aktywna={aktywnaKategoria} onWybierz={setAktywnaKategoria} />
+    </>
   )
 }
 
