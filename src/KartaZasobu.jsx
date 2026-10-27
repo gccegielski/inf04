@@ -1,9 +1,22 @@
 import { Link } from 'react-router-dom'
 
-function KartaZasobu() {
+function KartaZasobu({ element, usun, zmienFlage }) {
   return (
     <>
-      
+      <div className="col">
+      <div className={element.flaga ? 'card border-success' : 'card border-danger'}>
+        <div className="card-body">
+          <h5 className="card-title">{element.nazwa}</h5>
+          <p className="card-text">Grupa: {element.grupa}</p>
+          <p className="card-text">Rozmiar: {element.rozmiar}</p>
+          <div className="d-flex justify-content-between">
+            <Link to={`/${element.id}`} className="btn btn-outline-info">Szczegóły</Link>
+            <button onClick={() => zmienFlage(element.id)} className="btn btn-outline-primary">Flaga</button>
+            <button onClick={() => usun(element.id)} className="btn btn-danger">Usuń</button>
+          </div>
+        </div>
+      </div>
+    </div>
     </>
   )
 }
