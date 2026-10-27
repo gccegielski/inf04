@@ -32,7 +32,7 @@ function App() {
   };
 
   const zmienFlage = (identyfikator) => {
-    setLista(lista.map(element => (element.identyfikator === identyfikator ? { ...element, flaga: !element.flaga } : element)));
+    setLista(lista.map(element => (element.identyfikator === identyfikator ? { ...element, wyprzedany: !element.wyprzedany } : element)));
   };
 
   const dodaj = (nowy) => {

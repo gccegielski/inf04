@@ -7,7 +7,7 @@ function Katalog({ lista, status, filtrA, filtrB, setFiltrA, setFiltrB, usun, zm
 
   const widoczne = lista.filter(element => {
     if (filtrA != '' && filtrA != undefined && filtrB != '' && filtrB != undefined)
-      return element.liczba > filtrA && element.liczba < filtrB
+      return element.liczba >= filtrA && element.liczba <= filtrB
     else
       return true;
     });
