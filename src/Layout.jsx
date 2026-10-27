@@ -15,6 +15,10 @@ function Layout() {
       <main className="container">
         <Outlet />
       </main>
+      <footer className="container border-top text-center">
+        <p>sprawdzian1</p>
+      </footer>
+
     </>
   )
 }
