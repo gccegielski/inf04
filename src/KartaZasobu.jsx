@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 function KartaZasobu({ element, usun, zmienFlage }) {
-  let border = 'card';
+  let border = 'card border-3';
   if (element.wyprzedany && element.liczba >= 50) border = 'card border-success border-3';
   if (element.wyprzedany && element.liczba < 50) border = 'card border-warning border-3';
   
