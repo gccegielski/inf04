@@ -11,9 +11,9 @@ function KartaZasobu({ element, usun, zmienFlage }) {
           <p className="card-text">Liczba: {element.liczba}</p>
           <p className="card-text">Wyprzedany: {element.wyprzedany ? 'tak' : 'nie'}</p>
           <div className="d-flex justify-content-between">
-            <Link to={`/${element.id}`} className="btn btn-outline-info">Szczegóły</Link>
-            <button onClick={() => zmienFlage(element.id)} className="btn btn-outline-primary">Flaga</button>
-            <button onClick={() => usun(element.id)} className="btn btn-danger">Usuń</button>
+            <Link to={`/${element.identyfikator}`} className="btn btn-outline-info">Szczegóły</Link>
+            <button onClick={() => zmienFlage(element.identyfikator)} className="btn btn-outline-primary">Flaga</button>
+            <button onClick={() => usun(element.identyfikator)} className="btn btn-danger">Usuń</button>
           </div>
         </div>
       </div>

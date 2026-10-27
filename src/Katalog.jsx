@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom'
 import KartaZasobu from './KartaZasobu'
 
-function Katalog({ lista, status, filtr, setFiltr, usun, zmienFlage }) {
+function Katalog({ lista, status, filtrA, filtrB, setFiltrA, setFiltrB, usun, zmienFlage }) {
   if (status === 'ladowanie') return <div>Ładowanie danych...</div>;
   if (status === 'blad') return <div>Wystąpił błąd pobierania danych.</div>;
 
-  const widoczne = lista.filter(el => 
-    el.nazwa.toLowerCase().includes(filtr.toLowerCase())
-  );
+  const widoczne = lista.filter(element => {
+    if (filtrA != '' && filtrA != undefined && filtrB != '' && filtrB != undefined)
+      return element.liczba > filtrA && element.liczba < filtrB
+    else
+      return true;
+    });
 
   return (
     <>
@@ -15,20 +18,27 @@ function Katalog({ lista, status, filtr, setFiltr, usun, zmienFlage }) {
       <h2>Liczba pozycji: {lista.length}</h2>
       <div className="mb-4">
         <input
-          type="text"
+          type="number"
           className="form-control"
-          placeholder="Szukaj"
-          value={filtr}
-          onChange={(e) => setFiltr(e.target.value)}
+          placeholder="Od"
+          value={filtrA}
+          onChange={(e) => setFiltrA(e.target.value)}
+        />
+        <input
+          type="number"
+          className="form-control"
+          placeholder="Do"
+          value={filtrB}
+          onChange={(e) => setFiltrB(e.target.value)}
         />
       </div>
       <div className="row g-4">
-        {widoczne.map(el => (
+        {widoczne.map(element => (
           <KartaZasobu
-            key={el.id}
-            element={el}
+            key={element.identyfikator}
+            element={element}
             usun={usun}
-            przelaczFlage={zmienFlage}
+            zmienFlage={zmienFlage}
           />
         ))}
       </div>
