@@ -1,0 +1,37 @@
+[
+  {
+    "identyfikator": 1,
+    "nazwa": "Ranczo",
+    "klasa": "Komedia",
+    "liczba": 94,
+    "wyprzedany": false
+  },
+  {
+    "identyfikator": 2,
+    "nazwa": "Breaking Bad",
+    "klasa": "Dramat",
+    "liczba": 11,
+    "wyprzedany": true
+  },
+  {
+    "identyfikator": 3,
+    "nazwa": "Stranger Things",
+    "klasa": "Fantasy",
+    "liczba": 28,
+    "wyprzedany": true
+  },
+  {
+    "identyfikator": 4,
+    "nazwa": "Przyjaciele",
+    "klasa": "Komedia",
+    "liczba": 45,
+    "wyprzedany": false
+  },
+  {
+    "identyfikator": 5,
+    "nazwa": "Wiedźmin",
+    "klasa": "Dramat",
+    "liczba": 62,
+    "wyprzedany": true
+  }
+]
