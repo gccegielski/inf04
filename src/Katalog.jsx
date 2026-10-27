@@ -19,7 +19,7 @@ function Katalog({ lista, status, filtrA, filtrB, setFiltrA, setFiltrB, usun, zm
       <div className="mb-4">
         <input
           type="number"
-          className="form-control"
+          className="form-control mb-2"
           placeholder="Od"
           value={filtrA}
           onChange={(e) => setFiltrA(e.target.value)}
