@@ -1,121 +1,116 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { Routes, Route, Link, useParams, useNavigate } from 'react-router-dom'
+import { wydarzenia } from './wydarzenia.js'
 
-function App() {
-  const [count, setCount] = useState(0)
+const MIASTA = [...new Set(wydarzenia.map(w => w.miasto))]
+
+function ListaWydarzenPage() {
+  const [aktywneMiasta, setAktywneMiasta] = useState(MIASTA)
+
+  function przelaczMiasto(miasto) {
+    setAktywneMiasta(aktywne =>
+      aktywne.includes(miasto)
+        ? aktywne.filter(m => m !== miasto)
+        : [...aktywne, miasto]
+    )
+  }
+
+  const widoczne = wydarzenia.filter(w => aktywneMiasta.includes(w.miasto))
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="container mt-4">
+      <h1>Wydarzenia i koncerty</h1>
+
+      <div className="d-flex flex-wrap gap-3 mb-3">
+        {MIASTA.map(miasto => (
+          <div className="form-check form-switch" key={miasto}>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              role="switch"
+              id={`miasto-${miasto}`}
+              checked={aktywneMiasta.includes(miasto)}
+              onChange={() => przelaczMiasto(miasto)}
+            />
+            <label className="form-check-label" htmlFor={`miasto-${miasto}`}>
+              {miasto}
+            </label>
+          </div>
+        ))}
+      </div>
+
+      {widoczne.length === 0 && (
+        <div className="alert alert-secondary">Brak wydarzeń dla wybranych miast</div>
+      )}
+
+      <div className="row g-3">
+        {widoczne.map(wydarzenie => (
+          <div key={wydarzenie.id} className="col-12 col-md-4">
+            <div className="card h-100">
+              <div className="card-body">
+                <h3 className="card-title h5">{wydarzenie.nazwa}</h3>
+                <p className="text-body-secondary mb-2">
+                  {wydarzenie.miasto} — {wydarzenie.data}
+                </p>
+                <Link to={`/wydarzenie/${wydarzenie.id}`} className="btn btn-outline-primary btn-sm">
+                  Szczegóły
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function SzczegolyWydarzeniaPage() {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const wydarzenie = wydarzenia.find(w => w.id === Number(id))
+
+  if (!wydarzenie) {
+    return (
+      <div className="container mt-4">
+        <div className="alert alert-warning">
+          Nie znaleziono wydarzenia o numerze {id}
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+        <button type="button" className="btn btn-outline-secondary" onClick={() => navigate(-1)}>
+          Wstecz
         </button>
-      </section>
+      </div>
+    )
+  }
 
-      <div className="ticks"></div>
+  return (
+    <div className="container mt-4">
+      <h1>{wydarzenie.nazwa}</h1>
+      <p>Miasto: {wydarzenie.miasto}</p>
+      <p>Data: {wydarzenie.data}</p>
+      <p>Cena: {wydarzenie.cena === 0 ? 'Wstęp wolny' : `${wydarzenie.cena} zł`}</p>
+      <button type="button" className="btn btn-outline-secondary" onClick={() => navigate(-1)}>
+        Wstecz
+      </button>
+    </div>
+  )
+}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+function NotFoundPage() {
+  return (
+    <div className="container mt-4">
+      <h1>Nie ma takiej strony</h1>
+      <Link to="/">Wróć do listy</Link>
+    </div>
+  )
+}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<ListaWydarzenPage />} />
+      <Route path="/wydarzenie/:id" element={<SzczegolyWydarzeniaPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   )
 }
 
